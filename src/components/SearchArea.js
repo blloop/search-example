@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 class SearchArea extends Component {
 
@@ -23,6 +25,7 @@ class SearchArea extends Component {
                     onChange={this.updateText}
                     value={this.state.inputText}>
                 </input>
+                <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
             </div>
         )
     }
