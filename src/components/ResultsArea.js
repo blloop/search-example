@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class ResultsArea extends Component {
 
     render() {
-        console.log(this.props.resultsList);
         return (
             <div className='results-area'>
                 {!this.props.loadingStatus ?
