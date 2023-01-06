@@ -6,17 +6,27 @@ class ResultsArea extends Component {
         console.log(this.props.resultsList);
         return (
             <div className='results-area'>
+                {!this.props.loadingStatus ?
+                    (<>
+                        {/* Field to indicate number of results */}
+                        <div className='results-count'>
+                            Number of Results:
+                            {this.props.resultsList.length}
+                        </div>
 
-                {/* Display number of results found */}
-                <div className='results-count'>Number of Results: {this.props.resultsList.length}</div>
-
-                {/* Render a search-result div to resultsArea for each result found */}
-                {this.props.resultsList.map((value) => (
-                    <div key={value.DOI} className='search-result'>
-                        {value['container-title'] ? value['container-title'] : 'Untitled'}
-                    </div>
-                ))}
-
+                        {/* List of search results rendered */}
+                        {this.props.resultsList.map((value) => (
+                            <div
+                                key={value.DOI}
+                                className='search-result'>
+                                {value['container-title'] ?
+                                    value['container-title'] :
+                                    'Untitled'
+                                }
+                            </div>
+                        ))}
+                    </>)
+                    : <div className='loading'> Loading </div>}
             </div>
 
         )

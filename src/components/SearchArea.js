@@ -22,6 +22,7 @@ class SearchArea extends Component {
 
     // Function to send HTTP request to CrossRef API
     getSearch = (query) => {
+        this.props.setLoading(true);
         axios.get( // Use axios library to send HTTP GET request
             'https://api.crossref.org/works?query=' +
             this.state.inputText.replaceAll(' ', '+')
@@ -30,8 +31,11 @@ class SearchArea extends Component {
                 console.log(resp.data.message.items);
                 this.props.setResults(resp.data.message.items);
             };
+        }).then(() => {
+
         }).catch((err) => { // Catch error and display message
             console.log(err);
+            this.props.setLoading(false);
         });
     }
 
