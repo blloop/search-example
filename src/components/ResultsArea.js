@@ -1,36 +1,19 @@
 import React, { Component } from 'react';
 
-let sampleResults = [
-    'api-result-1',
-    'api-result-2',
-    'api-result-3',
-    'api-result-4'
-]
-
 class ResultsArea extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            // Temporary Results List
-            // Will modify when API usage implemented
-            resultsList: sampleResults,
-            // Placeholder count of results
-            resultsCount: 4
-        }
-    }
-
     render() {
+        console.log(this.props.resultsList);
         return (
             <div className='results-area'>
 
                 {/* Display number of results found */}
-                <div className='results-count'>Number of Results: {this.state.resultsCount}</div>
+                <div className='results-count'>Number of Results: {this.props.resultsList.length}</div>
 
                 {/* Render a search-result div to resultsArea for each result found */}
-                {this.state.resultsList.map((value) => (
-                    <div key={value} className='search-result'>
-                        <p>{value}</p>
+                {this.props.resultsList.map((value) => (
+                    <div key={value.DOI} className='search-result'>
+                        {value['container-title'] ? value['container-title'] : 'Untitled'}
                     </div>
                 ))}
 
