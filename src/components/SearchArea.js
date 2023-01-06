@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import FilterArea from './FilterArea';
 
 class SearchArea extends Component {
 
@@ -9,15 +10,19 @@ class SearchArea extends Component {
         super(props);
         this.state = {
             inputText: '',
-            errorMsg: ''
-        }
+            errorMsg: '',
+            filters: [],
+            loadState: false
+        };
     }
 
     // Function to update inputText based on input field
     updateText = (event) => {
         let newState = {
             inputText: event.target.value,
-            errorMsg: this.state.errorMsg
+            errorMsg: this.state.errorMsg,
+            filters: this.state.filters,
+            loadState: this.state.loadState
         };
         this.setState(newState);
     };
@@ -25,9 +30,42 @@ class SearchArea extends Component {
     setError = (error) => {
         let newState = {
             inputText: this.state.inputText,
-            errorMsg: error
-        }
+            errorMsg: error,
+            filters: this.state.filters,
+            loadState: this.state.loadState
+        };
         this.setState(newState);
+    }
+
+    setLoad = (bool) => {
+        let newState = {
+            inputText: this.state.inputText,
+            errorMsg: this.state.errorMsg,
+            filters: this.state.filters,
+            loadState: bool
+        };
+        this.setState(newState);
+
+    }
+
+    // Function to toggle filters applied
+    // through checkboxes
+    // Re-searches with new filters after call
+    toggleFilter = (filter) => {
+        let newFilters = this.state.filters;
+        if (newFilters.includes(filter)) {
+            newFilters.splice(newFilters.indexOf(filter), 1);
+        } else {
+            newFilters.push(filter);
+        }
+        let newState = {
+            inputText: this.state.inputText,
+            errorMsg: this.state.errorMsg,
+            filters: newFilters,
+            loadState: this.state.loadState
+        };
+        this.setState(newState);
+        // this.getSearch();
     }
 
     // Function to send HTTP request to CrossRef API
@@ -35,25 +73,30 @@ class SearchArea extends Component {
         if (this.state.inputText === '') {
             this.setError('Please enter a search query!');
             this.props.setResults(null, false);
+            this.setLoad(false);
             return;
         }
         this.props.setResults(null, true);
+        this.setLoad(true);
         axios.get( // Use axios library to send HTTP GET request
             'https://api.crossref.org/works?query=' +
             this.state.inputText.replaceAll(' ', '+')
         ).then((resp) => { // Update resultsList with request response
-            this.setError('');
-            this.props.setResults(resp.data.message.items, false);
-            console.log(resp.data.message.items);
-            // if (resp.data) {
-            // }
-            // else {// Return no results found
-            //     this.props.setResults([]);
-            // }
+            if (resp.data) {
+                this.setError('');
+                this.props.setResults(resp.data.message.items, false);
+                this.setLoad(false);
+                console.log(resp.data.message.items);
+            }
+            else { // Improperly formatted response
+                this.setError('ERROR: Could not read response');
+                this.props.setResults(null, false);
+                this.setLoad(false);
+            }
         }).catch((err) => { // Catch error and set error message
-            console.log("FOUND ERROR");
-            this.setError(`${err.name}: ${err.toJSON().message}`);
+            this.setError('ERROR: ' + err.toJSON().message);
             this.props.setResults(null, false);
+            this.setLoad(false);
         });
     }
 
@@ -69,14 +112,19 @@ class SearchArea extends Component {
 
                 {/* Button to start search query */}
                 <button onClick={() => this.getSearch()}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass}></FontAwesomeIcon>
+                    <FontAwesomeIcon
+                        icon={faMagnifyingGlass}>
+                    </FontAwesomeIcon>
                 </button>
+
+                {/* Area to choose search filters */}
+                < FilterArea toggleFilter={this.toggleFilter}></FilterArea>
 
                 {/* Placeholder for HTTP error messages */}
                 <p className='http-response'>
                     {this.state.errorMsg}
                 </p>
-            </div>
+            </div >
         )
     }
 }

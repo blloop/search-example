@@ -13,7 +13,8 @@ class App extends Component {
     };
   }
 
-  // Function to update resultsList
+  // Function to update 
+  // resultsList + loadingStatus
   setResults = (list, bool) => {
     let newState = {
       resultsList: list,
@@ -23,9 +24,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div className="App">
+      <div className='App'>
 
         {/* Title of Webpage */}
         <h1 className='title'> Simple Search </h1>
