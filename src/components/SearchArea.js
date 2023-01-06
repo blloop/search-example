@@ -17,7 +17,7 @@ class SearchArea extends Component {
     updateText = (event) => {
         let newState = {
             inputText: event.target.value,
-            errorMsg: ''
+            errorMsg: this.state.errorMsg
         };
         this.setState(newState);
     };
@@ -33,23 +33,27 @@ class SearchArea extends Component {
     // Function to send HTTP request to CrossRef API
     getSearch = () => {
         if (this.state.inputText === '') {
-            this.setError('Please enter a search query!')
-            this.props.setLoading(false);
+            this.setError('Please enter a search query!');
+            this.props.setResults(null, false);
             return;
         }
-        this.props.setLoading(true);
+        this.props.setResults(null, true);
         axios.get( // Use axios library to send HTTP GET request
             'https://api.crossref.org/works?query=' +
             this.state.inputText.replaceAll(' ', '+')
         ).then((resp) => { // Update resultsList with request response
-            if (resp.data) {
-                this.setError('');
-                this.props.setResults(resp.data.message.items);
-                // console.log(resp.data.message.items);
-            };
+            this.setError('');
+            this.props.setResults(resp.data.message.items, false);
+            console.log(resp.data.message.items);
+            // if (resp.data) {
+            // }
+            // else {// Return no results found
+            //     this.props.setResults([]);
+            // }
         }).catch((err) => { // Catch error and set error message
+            console.log("FOUND ERROR");
             this.setError(`${err.name}: ${err.toJSON().message}`);
-            this.props.setLoading(false);
+            this.props.setResults(null, false);
         });
     }
 
@@ -70,7 +74,7 @@ class SearchArea extends Component {
 
                 {/* Placeholder for HTTP error messages */}
                 <p className='http-response'>
-                    {this.state.errorMsg.length > 0 ? this.state.errorMsg : ''}
+                    {this.state.errorMsg}
                 </p>
             </div>
         )

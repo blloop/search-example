@@ -8,29 +8,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resultsList: [],
+      resultsList: null,
       loadingStatus: false
     };
   }
 
   // Function to update resultsList
-  setResults = (list) => {
+  setResults = (list, bool) => {
     let newState = {
       resultsList: list,
-      loadingStatus: false
-    };
-    this.setState(newState);
-  }
-
-  setLoading = (bool) => {
-    let newState = {
-      resultsList: this.state.resultsList,
       loadingStatus: bool
     };
     this.setState(newState);
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="App">
 
@@ -41,8 +34,7 @@ class App extends Component {
             Passes function to update resultsList
         */}
         <SearchArea
-          setResults={this.setResults}
-          setLoading={this.setLoading}>
+          setResults={this.setResults}>
         </SearchArea>
 
         {/* ResultsArea component 

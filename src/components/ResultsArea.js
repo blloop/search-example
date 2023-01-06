@@ -5,12 +5,16 @@ class ResultsArea extends Component {
     render() {
         return (
             <div className='results-area'>
-                {!this.props.loadingStatus ?
-                    (<>
+                {this.props.loadingStatus ?
+                    // Loading: return loading indicator
+                    <p className='loading'> Loading </p> :
+
+                    // Not loading: return results list
+                    (!this.props.resultsList ? null : (<>
                         {/* Field to indicate number of results */}
                         <div className='results-count'>
-                            Number of Results:
-                            {this.props.resultsList.length}
+                            Number of
+                            Results: {this.props.resultsList.length}
                         </div>
 
                         {/* List of search results rendered */}
@@ -25,7 +29,8 @@ class ResultsArea extends Component {
                             </div>
                         ))}
                     </>)
-                    : <div className='loading'> Loading </div>}
+                    )
+                }
             </div>
 
         )
