@@ -16,11 +16,10 @@ class App extends Component {
   // Function to update 
   // resultsList + loadingStatus
   setResults = (list, bool) => {
-    let newState = {
+    this.setState({
       resultsList: list,
       loadingStatus: bool
-    };
-    this.setState(newState);
+    });
   }
 
   render() {
@@ -34,7 +33,8 @@ class App extends Component {
             Passes function to update resultsList
         */}
         <SearchArea
-          setResults={this.setResults}>
+          setResults={this.setResults}
+          loadingStatus={this.state.loadingStatus}>
         </SearchArea>
 
         {/* ResultsArea component 

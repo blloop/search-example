@@ -12,46 +12,49 @@ class SearchArea extends Component {
             inputText: '',
             errorMsg: '',
             filters: [],
-            loadState: false
+            sort: '',
+            ascending: false
         };
     }
 
     // Function to update inputText based on input field
     updateText = (event) => {
         let newState = {
-            inputText: event.target.value,
-            errorMsg: this.state.errorMsg,
-            filters: this.state.filters,
-            loadState: this.state.loadState
+            ...this.state,
+            inputText: event.target.value
         };
         this.setState(newState);
     };
 
+    // Function to set error message for display
     setError = (error) => {
-        let newState = {
-            inputText: this.state.inputText,
-            errorMsg: error,
-            filters: this.state.filters,
-            loadState: this.state.loadState
-        };
-        this.setState(newState);
+        this.setState({
+            ...this.state,
+            errorMsg: error
+        });
     }
 
+    // Function to set sort method
+    // through radio buttons
+    setSort = (val) => {
+        if (this.state.sort === val) {
+            return;
+        }
+        this.setState({
+            ...this.state,
+            sort: val
+        });
+        // this.getSearch();
+    }
 
-    setLoad = (bool) => {
-        // (bool ?
-        //     document.getElementById('filter-area')
-        //         .classList.add('disabled') :
-        //     document.getElementById('filter-area')
-        //         .classList.remove('disabled'));
-        let newState = {
-            inputText: this.state.inputText,
-            errorMsg: this.state.errorMsg,
-            filters: this.state.filters,
-            loadState: bool
-        };
-        this.setState(newState);
-
+    // Function to toggle ascending/descending 
+    // sort through toggle button
+    toggleSort = () => {
+        this.setState({
+            ...this.state,
+            ascending: !this.state.ascending
+        });
+        console.log(this.state.ascending);
     }
 
     // Function to toggle filters applied
@@ -59,32 +62,27 @@ class SearchArea extends Component {
     // Re-searches with new filters after call
     toggleFilter = (filter) => {
         let newFilters = this.state.filters;
-        if (newFilters.includes(filter)) {
-            newFilters.splice(newFilters.indexOf(filter), 1);
-        } else {
-            newFilters.push(filter);
-        }
-        let newState = {
-            inputText: this.state.inputText,
-            errorMsg: this.state.errorMsg,
-            filters: newFilters,
-            loadState: this.state.loadState
-        };
-        this.setState(newState);
+        (newFilters.includes(filter) ?
+            newFilters.splice(newFilters.indexOf(filter), 1) :
+            newFilters.push(filter)
+        );
+        this.setState({
+            ...this.state, filters: newFilters
+        });
         this.getSearch();
-        console.log(newFilters);
     }
 
     // Function to send HTTP request to CrossRef API
+    // Success: Sets resultsList to HTTP response
+    // Failure: Throws error message in error field
     getSearch = () => {
+        console.log('Asc is ' + this.state.ascending);
         if (this.state.inputText === '') {
             this.setError('Please enter a search query!');
             this.props.setResults(null, false);
-            this.setLoad(false);
             return;
         }
         this.props.setResults(null, true);
-        this.setLoad(true);
         axios.get( // Use axios library to send HTTP GET request
             'https://api.crossref.org/works?query=' +
             this.state.inputText.replaceAll(' ', '+')
@@ -92,18 +90,15 @@ class SearchArea extends Component {
             if (resp.data) {
                 this.setError('');
                 this.props.setResults(resp.data.message.items, false);
-                this.setLoad(false);
                 console.log(resp.data.message.items);
             }
             else { // Improperly formatted response
                 this.setError('ERROR: Could not read response');
                 this.props.setResults(null, false);
-                this.setLoad(false);
             }
         }).catch((err) => { // Catch error and set error message
             this.setError('ERROR: ' + err.toJSON().message);
             this.props.setResults(null, false);
-            this.setLoad(false);
         });
     }
 
@@ -118,7 +113,7 @@ class SearchArea extends Component {
                 </input>
 
                 {/* Button to start search query */}
-                <button onClick={() => this.getSearch()}>
+                <button onClick={this.getSearch}>
                     <FontAwesomeIcon
                         icon={faMagnifyingGlass}>
                     </FontAwesomeIcon>
@@ -126,13 +121,16 @@ class SearchArea extends Component {
 
                 {/* Area to choose search filters */}
                 < FilterArea
-                    loadState={this.state.loadState}
-                    toggleFilter={this.toggleFilter}
-                    toggleSort={this.toggleSort}>
+                    loadingStatus={this.props.loadingStatus}
+                    getSearch={this.getSearch}
+                    ascending={this.state.ascending}
+                    setSort={this.setSort}
+                    toggleSort={this.toggleSort}
+                    toggleFilter={this.toggleFilter}>
                 </FilterArea>
 
-                {/* Placeholder for HTTP error messages */}
-                <p className='http-response'>
+                {/* Display for HTTP error messages */}
+                <p className='error-field'>
                     {this.state.errorMsg}
                 </p>
             </div >
