@@ -5,7 +5,7 @@ import ResultsArea from './components/ResultsArea';
 
 class App extends Component {
 
-  // resultsList: List of results, array
+  // resultsList: List of results, any[]
   // errorMsg: Error message, string
   //
   // State 1: resultsList is not null: 
@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resultsList: [],
+      resultsList: null,
       errorMsg: 'Please enter a search query!'
     };
   }

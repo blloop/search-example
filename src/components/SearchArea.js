@@ -6,11 +6,14 @@ import FilterArea from './FilterArea';
 
 class SearchArea extends Component {
 
+    // inputText: Search bar text, string
+    // filters: List of search filters, string[]
+    // sort: Attribute to sort by, string
+    // ascending: Order to sort by, boolean
     constructor(props) {
         super(props);
         this.state = {
             inputText: '',
-            errorMsg: '',
             filters: [],
             sort: '',
             ascending: true
@@ -26,14 +29,6 @@ class SearchArea extends Component {
         this.setState(newState);
     };
 
-    // Function to set error message for display
-    setError = (error) => {
-        this.setState({
-            ...this.state,
-            errorMsg: error
-        });
-    }
-
     // Function to set sort method
     // through radio buttons
     setSort = (val) => {
@@ -43,8 +38,7 @@ class SearchArea extends Component {
         this.setState((state) => ({
             ...state,
             sort: val
-        }));
-        this.getSearch();
+        }), () => this.getSearch());
     }
 
     // Function to toggle ascending/descending 
@@ -53,8 +47,7 @@ class SearchArea extends Component {
         this.setState({
             ...this.state,
             ascending: !this.state.ascending
-        });
-        this.getSearch();
+        }, () => this.getSearch());
     }
 
     // Function to toggle filters applied
@@ -68,24 +61,35 @@ class SearchArea extends Component {
         );
         this.setState({
             ...this.state, filters: newFilters
-        });
-        this.getSearch();
+        }, () => this.getSearch());
     }
 
     // Function to send HTTP request to CrossRef API
     // Success: Sets resultsList to HTTP response
     // Failure: Throws error message in error field
     getSearch = () => {
+        // Check for null input and exit accordingly
         if (this.state.inputText === '') {
             this.props.setResults(null, 'Please enter a search query!');
             return;
         }
+        // Build request string for api call
         this.props.setResults(null, '');
-        axios.get( // Use axios library to send HTTP GET request
-            'https://api.crossref.org/works?query=' +
-            this.state.inputText.replaceAll(' ', '+')
-        ).then((resp) => { // Update resultsList with request response
-            if (resp.data) {
+        let searchString = 'https://api.crossref.org/works?query=';
+        searchString += this.state.inputText.replaceAll(' ', '+');
+        searchString += (this.state.sort ?
+            '&sort=' + this.state.sort +
+            '&order=' + (this.state.ascending ? 'asc' : 'desc')
+            : ''
+        );
+        searchString += (this.state.filters.length > 0 ?
+            `&filter=${this.state.filters[0]}:true` : '');
+        for (let i = 1; i < this.state.filters.length; i++) {
+            searchString += `,${this.state.filters[i]}:true`;
+        };
+        // Call API and parse results
+        axios.get(searchString).then((resp) => {
+            if (resp.data) { // Update resultsList with request response
                 this.props.setResults(resp.data.message.items, '');
                 // console.log(resp.data.message.items);
             }
@@ -114,8 +118,12 @@ class SearchArea extends Component {
                     </FontAwesomeIcon>
                 </button>
 
+                <button onClick={() => console.log(this.state)}> State </button>
+
                 {/* Area to choose search filters */}
                 < FilterArea
+                    // getSearch={this.getSearch}
+                    sort={this.state.sort}
                     setSort={this.setSort}
                     toggleSort={this.toggleSort}
                     toggleFilter={this.toggleFilter}
@@ -123,10 +131,6 @@ class SearchArea extends Component {
                     loadingStatus={this.props.loadingStatus}>
                 </FilterArea>
 
-                {/* Display for HTTP error messages */}
-                <p className='error-field'>
-                    {this.state.errorMsg}
-                </p>
             </div >
         )
     }

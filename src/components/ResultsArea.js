@@ -5,13 +5,16 @@ class ResultsArea extends Component {
     render() {
         return (
             <div className='results-area'>
+
                 {this.props.loadState ?
                     // Loading: return loading indicator
                     <p className='loading'> Loading... </p> :
 
                     // Not loading: return results list
-                    // Check for null results, error case
-                    (!this.props.resultsList ? null :
+                    (this.props.resultsList === null ?
+                        // No result, must have error returned
+                        <p> {this.props.errorMsg} </p> :
+
                         // Check for 0 results, return message
                         (this.props.resultsList.length === 0 ? (
                             <p className='no-results'> No results found! </p>
@@ -26,7 +29,7 @@ class ResultsArea extends Component {
                                 {/* List of search results rendered */}
                                 {this.props.resultsList.map((value) => (
                                     <div
-                                        key={value.DOI}
+                                        key={value.DOI ? value.DOI : Math.random()}
                                         className='search-result'>
                                         {value['container-title'] ?
                                             value['container-title'] :
@@ -38,8 +41,8 @@ class ResultsArea extends Component {
                         )
                     )
                 }
-            </div>
 
+            </div>
         )
     }
 }
