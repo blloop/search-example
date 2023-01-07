@@ -37,7 +37,13 @@ class SearchArea extends Component {
         this.setState(newState);
     }
 
+
     setLoad = (bool) => {
+        // (bool ?
+        //     document.getElementById('filter-area')
+        //         .classList.add('disabled') :
+        //     document.getElementById('filter-area')
+        //         .classList.remove('disabled'));
         let newState = {
             inputText: this.state.inputText,
             errorMsg: this.state.errorMsg,
@@ -65,7 +71,8 @@ class SearchArea extends Component {
             loadState: this.state.loadState
         };
         this.setState(newState);
-        // this.getSearch();
+        this.getSearch();
+        console.log(newFilters);
     }
 
     // Function to send HTTP request to CrossRef API
@@ -118,7 +125,11 @@ class SearchArea extends Component {
                 </button>
 
                 {/* Area to choose search filters */}
-                < FilterArea toggleFilter={this.toggleFilter}></FilterArea>
+                < FilterArea
+                    loadState={this.state.loadState}
+                    toggleFilter={this.toggleFilter}
+                    toggleSort={this.toggleSort}>
+                </FilterArea>
 
                 {/* Placeholder for HTTP error messages */}
                 <p className='http-response'>

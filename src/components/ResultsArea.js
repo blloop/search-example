@@ -7,7 +7,7 @@ class ResultsArea extends Component {
             <div className='results-area'>
                 {this.props.loadingStatus ?
                     // Loading: return loading indicator
-                    <p className='loading'> Loading </p> :
+                    <p className='loading'> Loading... </p> :
 
                     // Not loading: return results list
                     // Check for null results, error case
