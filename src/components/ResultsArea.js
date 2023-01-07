@@ -5,7 +5,7 @@ class ResultsArea extends Component {
     render() {
         return (
             <div className='results-area'>
-                {this.props.loadingStatus ?
+                {this.props.loadState ?
                     // Loading: return loading indicator
                     <p className='loading'> Loading... </p> :
 

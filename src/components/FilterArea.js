@@ -5,7 +5,7 @@ class FilterArea extends Component {
     render() {
         return (
             <>
-                <div id='narrow-search' className={this.props.loadingStatus ? 'disabled' : null}>
+                <div id='narrow-search' className={this.props.loadState ? 'disabled' : null}>
                     <div className='filter-area'>
                         <input
                             type='checkbox'
@@ -39,7 +39,6 @@ class FilterArea extends Component {
                             onClick={() => {
                                 // No sort preference
                                 this.props.setSort('');
-                                // this.props.getSearch();
                             }}>
                         </input>
                         <p> None </p>
@@ -49,7 +48,6 @@ class FilterArea extends Component {
                             onClick={() => {
                                 // Relevance Score
                                 this.props.setSort('relevance');
-                                // this.props.getSearch();
                             }}>
                         </input>
                         <p> Relevance </p>
@@ -59,7 +57,6 @@ class FilterArea extends Component {
                             onClick={() => {
                                 // Publication Date
                                 this.props.setSort('published');
-                                // this.props.getSearch();
                             }}>
                         </input>
                         <p> Publish Date </p>
@@ -69,14 +66,12 @@ class FilterArea extends Component {
                             onClick={() => {
                                 // Number of reference counts included
                                 this.props.setSort('references-count');
-                                // this.props.getSearch();
                             }}>
                         </input>
                         <p> Reference Count </p>
                         <button onClick={() => {
                             this.props.toggleSort();
-                            this.props.getSearch();
-                        }}> {this.props.ascending ? 'Descending' : 'Ascending'} </button>
+                        }}> {this.props.ascending ? 'Ascending' : 'Descending'} </button>
                     </div>
                 </div>
             </>

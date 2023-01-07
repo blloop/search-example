@@ -5,20 +5,28 @@ import ResultsArea from './components/ResultsArea';
 
 class App extends Component {
 
+  // resultsList: List of results, array
+  // errorMsg: Error message, string
+  //
+  // State 1: resultsList is not null: 
+  //          Response found
+  // State 2: resultsList is null, errorMsg null: 
+  //          Loading
+  // State 3: resultsList is null, errorMsg is not null: 
+  //          Error
   constructor(props) {
     super(props);
     this.state = {
-      resultsList: null,
-      loadingStatus: false
+      resultsList: [],
+      errorMsg: 'Please enter a search query!'
     };
   }
 
-  // Function to update 
-  // resultsList + loadingStatus
-  setResults = (list, bool) => {
+  // Function to update resultsList + errorMsg
+  setResults = (list, err) => {
     this.setState({
       resultsList: list,
-      loadingStatus: bool
+      errorMsg: err
     });
   }
 
@@ -26,7 +34,7 @@ class App extends Component {
     return (
       <div className='App'>
 
-        {/* Title of Webpage */}
+        {/* Webpage Header */}
         <h1 className='title'> Simple Search </h1>
 
         {/* SearchArea component:
@@ -34,7 +42,7 @@ class App extends Component {
         */}
         <SearchArea
           setResults={this.setResults}
-          loadingStatus={this.state.loadingStatus}>
+          errorMsg={this.state.errorMsg}>
         </SearchArea>
 
         {/* ResultsArea component 
@@ -42,7 +50,11 @@ class App extends Component {
         */}
         <ResultsArea
           resultsList={this.state.resultsList}
-          loadingStatus={this.state.loadingStatus}>
+          loadState={
+            (this.state.resultsList === null) &&
+            (this.state.errorMsg === '')
+          }
+          errorMsg={this.state.errorMsg}>
         </ResultsArea>
 
       </div>
