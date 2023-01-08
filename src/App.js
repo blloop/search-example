@@ -35,14 +35,18 @@ class App extends Component {
       <div className='App'>
 
         {/* Webpage Header */}
-        <h1 className='title'> Simple Search </h1>
+        <p className='title'> Simple Search </p>
 
         {/* SearchArea component:
             Passes function to update resultsList
         */}
         <SearchArea
           setResults={this.setResults}
-          errorMsg={this.state.errorMsg}>
+          errorMsg={this.state.errorMsg}
+          loadState={
+            (this.state.resultsList === null) &&
+            (this.state.errorMsg === '')
+          }>
         </SearchArea>
 
         {/* ResultsArea component 
@@ -50,11 +54,11 @@ class App extends Component {
         */}
         <ResultsArea
           resultsList={this.state.resultsList}
+          errorMsg={this.state.errorMsg}
           loadState={
             (this.state.resultsList === null) &&
             (this.state.errorMsg === '')
-          }
-          errorMsg={this.state.errorMsg}>
+          }>
         </ResultsArea>
 
       </div>

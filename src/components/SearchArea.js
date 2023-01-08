@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import FilterArea from './FilterArea';
+import BarArea from './BarArea';
 
 class SearchArea extends Component {
 
@@ -105,30 +104,20 @@ class SearchArea extends Component {
         return (
             <div className='search-area'>
 
-                {/* Input field to type search query */}
-                <input
-                    onChange={this.updateText}
-                    value={this.state.inputText}>
-                </input>
-
-                {/* Button to start search query */}
-                <button onClick={this.getSearch}>
-                    <FontAwesomeIcon
-                        icon={faMagnifyingGlass}>
-                    </FontAwesomeIcon>
-                </button>
-
-                <button onClick={() => console.log(this.state)}> State </button>
+                <BarArea
+                    updateText={this.updateText}
+                    value={this.state.inputText}
+                    getSearch={this.getSearch}>
+                </BarArea>
 
                 {/* Area to choose search filters */}
                 < FilterArea
-                    // getSearch={this.getSearch}
                     sort={this.state.sort}
                     setSort={this.setSort}
                     toggleSort={this.toggleSort}
                     toggleFilter={this.toggleFilter}
                     ascending={this.state.ascending}
-                    loadingStatus={this.props.loadingStatus}>
+                    loadState={this.props.loadState}>
                 </FilterArea>
 
             </div >

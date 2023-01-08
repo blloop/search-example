@@ -8,20 +8,20 @@ class ResultsArea extends Component {
 
                 {this.props.loadState ?
                     // Loading: return loading indicator
-                    <p className='loading'> Loading... </p> :
+                    <p className='text-output'> Loading... </p> :
 
                     // Not loading: return results list
                     (this.props.resultsList === null ?
                         // No result, must have error returned
-                        <p> {this.props.errorMsg} </p> :
+                        <p className='text-output'> {this.props.errorMsg} </p> :
 
                         // Check for 0 results, return message
                         (this.props.resultsList.length === 0 ? (
-                            <p className='no-results'> No results found! </p>
+                            <p className='text-output'> No results found! </p>
                         ) :
                             <>
                                 {/* Field to indicate number of results */}
-                                <div className='results-count'>
+                                <div className='text-output result-count'>
                                     Number of
                                     Results: {this.props.resultsList.length}
                                 </div>

@@ -3,12 +3,17 @@ import React, { Component } from 'react';
 class FilterArea extends Component {
 
     render() {
+        console.log(this.props.loadState);
         return (
-            <div id='narrow-search'
-                className={this.props.loadState ? 'disabled' : null}>
+            <div className={'narrow-search' +
+                (this.props.loadState ? ' disabled' : '')
+            }>
 
                 {/* Filter checkboxes */}
                 <div className='filter-area'>
+                    {/* Filter Area Title */}
+                    <p> Filters </p>
+                    <hr></hr>
                     <input
                         type='checkbox'
                         onClick={() => {
@@ -17,6 +22,7 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Has License </p>
+                    <br></br>
                     <input
                         type='checkbox'
                         onClick={() => {
@@ -25,6 +31,7 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Has References </p>
+                    <br></br>
                     <input
                         type='checkbox'
                         onClick={() => {
@@ -33,6 +40,8 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Has Abstract </p>
+                    <br></br>
+                    <hr></hr>
                 </div>
 
                 {/* Sort radio buttons */}
@@ -48,6 +57,7 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> None </p>
+                    <br></br>
                     <input
                         checked={this.props.sort === 'relevance'}
                         type='radio'
@@ -59,6 +69,7 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Relevance </p>
+                    <br></br>
                     <input
                         checked={this.props.sort === 'published'}
                         type='radio'
@@ -70,6 +81,7 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Publish Date </p>
+                    <br></br>
                     <input
                         checked={this.props.sort === 'references-count'}
                         type='radio'
@@ -81,6 +93,8 @@ class FilterArea extends Component {
                         }}>
                     </input>
                     <p> Reference Count </p>
+                    <br></br>
+                    <hr></hr>
 
                     {/* Ascending - Descending Option */}
                     <button
