@@ -14,88 +14,79 @@ class FilterArea extends Component {
                     {/* Filter Area Title */}
                     <p> Filters </p>
                     <hr></hr>
-                    <input
-                        type='checkbox'
-                        onClick={() => {
+                    <div className='line'>
+                        <input type='checkbox' onClick={() => {
                             // Has a license
                             this.props.toggleFilter('has-license');
                         }}>
-                    </input>
-                    <p> Has License </p>
-                    <br></br>
-                    <input
-                        type='checkbox'
-                        onClick={() => {
+                        </input>
+                        <p> Has License </p>
+                    </div>
+                    <div className='line'>
+                        <input type='checkbox' onClick={() => {
                             // Contains a list of references
                             this.props.toggleFilter('has-references');
                         }}>
-                    </input>
-                    <p> Has References </p>
-                    <br></br>
-                    <input
-                        type='checkbox'
-                        onClick={() => {
+                        </input>
+                        <p> Has References </p>
+                    </div>
+                    <div className='line'>
+                        <input type='checkbox' onClick={() => {
                             // Contains an abstract
                             this.props.toggleFilter('has-abstract');
                         }}>
-                    </input>
-                    <p> Has Abstract </p>
-                    <br></br>
+                        </input>
+                        <p> Has Abstract </p>
+                    </div>
                     <hr></hr>
                 </div>
 
                 {/* Sort radio buttons */}
                 <div className='sort-area'>
-                    <input
-                        checked={this.props.sort === ''}
-                        type='radio'
-                        name='sorts'
-                        readOnly
-                        onClick={() => {
-                            // No sort preference
-                            this.props.setSort('');
-                        }}>
-                    </input>
-                    <p> None </p>
-                    <br></br>
-                    <input
-                        checked={this.props.sort === 'relevance'}
-                        type='radio'
-                        name='sorts'
-                        readOnly
-                        onClick={() => {
-                            // Relevance Score
-                            this.props.setSort('relevance');
-                        }}>
-                    </input>
-                    <p> Relevance </p>
-                    <br></br>
-                    <input
-                        checked={this.props.sort === 'published'}
-                        type='radio'
-                        name='sorts'
-                        readOnly
-                        onClick={() => {
-                            // Publication Date
-                            this.props.setSort('published');
-                        }}>
-                    </input>
-                    <p> Publish Date </p>
-                    <br></br>
-                    <input
-                        checked={this.props.sort === 'references-count'}
-                        type='radio'
-                        name='sorts'
-                        readOnly
-                        onClick={() => {
-                            // Number of reference counts
-                            this.props.setSort('references-count');
-                        }}>
-                    </input>
-                    <p> Reference Count </p>
-                    <br></br>
+                    {/* Filter Area Title */}
+                    <p> Sort By </p>
                     <hr></hr>
-
+                    <div className='line'>
+                        <input type='radio' name='sorts' readOnly
+                            checked={this.props.sort === ''}
+                            onClick={() => {
+                                // No sort preference
+                                this.props.setSort('');
+                            }}>
+                        </input>
+                        <p> None </p>
+                    </div>
+                    <div className='line'>
+                        <input type='radio' name='sorts' readOnly
+                            checked={this.props.sort === 'relevance'}
+                            onClick={() => {
+                                // Relevance Score
+                                this.props.setSort('relevance');
+                            }}>
+                        </input>
+                        <p> Relevance </p>
+                    </div>
+                    <div className='line'>
+                        <input type='radio' name='sorts' readOnly
+                            checked={this.props.sort === 'published'}
+                            onClick={() => {
+                                // Publication Date
+                                this.props.setSort('published');
+                            }}>
+                        </input>
+                        <p> Publish Date </p>
+                    </div>
+                    <div className='line'>
+                        <input type='radio' name='sorts' readOnly
+                            checked={this.props.sort === 'references-count'}
+                            onClick={() => {
+                                // Number of reference counts
+                                this.props.setSort('references-count');
+                            }}>
+                        </input>
+                        <p> Reference Count </p>
+                    </div>
+                    <br></br>
                     {/* Ascending - Descending Option */}
                     <button
                         className='toggle-ascend'
@@ -106,8 +97,8 @@ class FilterArea extends Component {
                             'Ascending' :
                             'Descending'}
                     </button>
-
                 </div>
+
             </div>
         )
     }

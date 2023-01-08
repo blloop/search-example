@@ -1,44 +1,68 @@
 * {
   margin: 0;
+  font-size: 18px;
+  font-family: 'Trebuchet MS',
+    'Lucida Sans Unicode',
+    'Lucida Grande',
+    'Lucida Sans',
+    Arial,
+    sans-serif;
   box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(154, 116, 42);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background-color: black;
 }
 
 .App {
   width: 1200px;
   max-width: 80vw;
+  height: 100vh;
   margin: 0 auto;
+  padding: 12px;
   text-align: center;
+  background-color: rgb(255, 204, 101);
 }
 
 .title {
-  margin: 24px 0;
+  margin: 12px 0;
   font-size: 36px;
   font-weight: bold;
 }
 
-.search-bar {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
+.subtitle {
   margin: 12px 0;
 }
 
-.search-input {
+.search-bar {
   width: 400px;
+  margin: 12px auto;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.search-input {
   height: 28px;
   font-size: 24px;
 }
 
 .narrow-search {
-  width: 200px;
+  width: 20%;
   float: left;
 }
 
 .narrow-search>div {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-
+  align-items: baseline
 }
 
 .narrow-search p {
@@ -48,6 +72,11 @@
 .disabled {
   pointer-events: none;
   color: gray;
+}
+
+.results-area {
+  width: 60%;
+  margin-left: 20%;
 }
 
 .text-output {

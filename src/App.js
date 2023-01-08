@@ -36,6 +36,7 @@ class App extends Component {
 
         {/* Webpage Header */}
         <p className='title'> Simple Search </p>
+        <p className='subtitle'> Subtitle Here </p>
 
         {/* SearchArea component:
             Passes function to update resultsList
