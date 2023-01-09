@@ -44,7 +44,7 @@ button:hover {
 .App {
   width: 1200px;
   max-width: 84vw;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 12px;
   text-align: center;
@@ -119,11 +119,44 @@ button:hover {
 }
 
 .results-area {
-  margin: 12px 180px;
+  margin: 12px 200px;
+}
+
+.search-result {
+  margin: 12px 0;
+  border-radius: 16px;
+  border: 2px solid var(--contrast);
 }
 
 .text-output {
   text-align: center;
 }
 
-@media only screen and (max-width: 1000px) {}
+@media only screen and (max-width: 1000px) {
+
+  .narrow-search {
+    width: 100%;
+    margin: 12px 0;
+    position: relative;
+  }
+
+  .narrow-search div {
+    display: inline-block;
+  }
+
+  .line {
+    padding: 0 12px;
+  }
+
+  .subtitle {
+    margin: 0 12px 12px;
+  }
+
+  .results-area {
+    margin: 12px 24px;
+  }
+
+  .search-bar {
+    max-width: 100%;
+  }
+}

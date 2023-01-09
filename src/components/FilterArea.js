@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class FilterArea extends Component {
 
     render() {
-        console.log(this.props.loadState);
         return (
             <div className={'narrow-search' +
                 (this.props.loadState ? ' disabled' : '')
@@ -37,6 +36,7 @@ class FilterArea extends Component {
                         </input>
                         <p> Has Abstract </p>
                     </div>
+                    <br></br>
                 </div>
 
                 {/* Sort radio buttons */}
