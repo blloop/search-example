@@ -17,6 +17,16 @@ class SearchArea extends Component {
             sort: '',
             ascending: true
         };
+        document.addEventListener(
+            "keydown",
+            this.handleSpace);
+    }
+
+    handleSpace = (event) => {
+        if (event.keyCode === 13) {
+            this.getSearch();
+            // console.log('lol')
+        }
     }
 
     // Function to update inputText based on input field
@@ -90,7 +100,6 @@ class SearchArea extends Component {
         axios.get(searchString).then((resp) => {
             if (resp.data) { // Update resultsList with request response
                 this.props.setResults(resp.data.message.items, '');
-                console.log(resp.data.message.items);
             }
             else { // Improperly formatted response
                 this.props.setResults(null, 'ERROR: Could not read response');

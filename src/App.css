@@ -129,7 +129,15 @@ button:hover {
 
 .disabled {
   pointer-events: none;
-  background-color: var(--mid-fill);
+}
+
+.disabled p,
+.disabled button {
+  color: var(--dark-fill)
+}
+
+.disabled hr {
+  background-color: var(--dark-fill);
 }
 
 .results-area {
