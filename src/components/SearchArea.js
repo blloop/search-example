@@ -104,12 +104,6 @@ class SearchArea extends Component {
         return (
             <div className='search-area'>
 
-                <BarArea
-                    updateText={this.updateText}
-                    value={this.state.inputText}
-                    getSearch={this.getSearch}>
-                </BarArea>
-
                 {/* Area to choose search filters */}
                 < FilterArea
                     sort={this.state.sort}
@@ -119,6 +113,13 @@ class SearchArea extends Component {
                     ascending={this.state.ascending}
                     loadState={this.props.loadState}>
                 </FilterArea>
+
+                {/* Area to enter search query */}
+                <BarArea
+                    updateText={this.updateText}
+                    value={this.state.inputText}
+                    getSearch={this.getSearch}>
+                </BarArea>
 
             </div >
         )

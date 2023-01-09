@@ -10,13 +10,12 @@ class FilterArea extends Component {
             }>
 
                 {/* Filter checkboxes */}
-                <div className='filter-area'>
+                <div className='filter-area subtitle'>
                     {/* Filter Area Title */}
                     <p> Filters </p>
                     <hr></hr>
                     <div className='line'>
                         <input type='checkbox' onClick={() => {
-                            // Has a license
                             this.props.toggleFilter('has-license');
                         }}>
                         </input>
@@ -38,11 +37,10 @@ class FilterArea extends Component {
                         </input>
                         <p> Has Abstract </p>
                     </div>
-                    <hr></hr>
                 </div>
 
                 {/* Sort radio buttons */}
-                <div className='sort-area'>
+                <div className='sort-area subtitle'>
                     {/* Filter Area Title */}
                     <p> Sort By </p>
                     <hr></hr>
@@ -84,12 +82,13 @@ class FilterArea extends Component {
                                 this.props.setSort('references-count');
                             }}>
                         </input>
-                        <p> Reference Count </p>
+                        <p> Ref. Count </p>
                     </div>
                     <br></br>
                     {/* Ascending - Descending Option */}
                     <button
-                        className='toggle-ascend'
+                        className={'toggle-ascend' +
+                            (this.props.loadState ? ' disabled' : '')}
                         onClick={() => {
                             this.props.toggleSort();
                         }}>

@@ -9,13 +9,15 @@ class BarArea extends Component {
             <div className='search-bar'>
                 {/* Input field to type search query */}
                 <input
-                    className='search-input'
+                    className='search-input search'
                     onChange={this.props.updateText}
                     value={this.props.inputText}>
                 </input>
 
                 {/* Button to start search query */}
-                <button onClick={this.props.getSearch}>
+                <button
+                    className='search'
+                    onClick={this.props.getSearch}>
                     <FontAwesomeIcon
                         icon={faMagnifyingGlass}>
                     </FontAwesomeIcon>
