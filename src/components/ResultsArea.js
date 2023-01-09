@@ -21,7 +21,7 @@ class ResultsArea extends Component {
                         ) :
                             <>
                                 {/* Field to indicate number of results */}
-                                <div className='text-output result-count'>
+                                <div className='result-count'>
                                     Number of
                                     Results: {this.props.resultsList.length}
                                 </div>
@@ -31,10 +31,33 @@ class ResultsArea extends Component {
                                     <div
                                         key={value.DOI ? value.DOI : Math.random()}
                                         className='search-result'>
-                                        {value['container-title'] ?
-                                            value['container-title'] :
-                                            'Untitled'
-                                        }
+                                        <p>
+                                            {value['URL'] ?
+                                                <a href={value['URL']}>
+                                                    {value['title'] ?
+                                                        value['title'].toString().slice(0, 200) +
+                                                        (value['title'].toString().length > 200 ? '...' : '') :
+                                                        'Untitled'
+                                                    } </a> :
+                                                'No Source'
+                                            }
+                                        </p>
+                                        <p>
+                                            Licensed:
+                                            {' ' + (value['license'] ?
+                                                'Yes' : 'No')}
+                                            , References:
+                                            {' ' + value['reference-count']}
+                                            , Abstract:
+                                            {' ' + (value['abstract'] ?
+                                                'Yes' : 'No')}
+                                        </p>
+                                        <p>
+                                            Published:
+                                            {' ' + (value['published'] ?
+                                                value['published']['date-parts'] : 'No')}
+
+                                        </p>
                                     </div>
                                 ))}
                             </>

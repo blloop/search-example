@@ -30,6 +30,18 @@ hr {
   border-radius: 6px;
 }
 
+a {
+  text-decoration: none;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-size: 24px;
+  max-height: 48px;
+}
+
+a:hover {
+  background-color: var(--mid-fill);
+}
+
 button {
   border: 2px solid var(--contrast);
   border-radius: 6px;
@@ -83,6 +95,7 @@ button:hover {
   margin: 6px auto;
   min-width: 48px;
   border: 2px solid var(--contrast);
+  background-color: var(--light-fill);
 }
 
 .narrow-search {
@@ -109,13 +122,14 @@ button:hover {
 }
 
 .narrow-search input {
-  margin-right: 6px;
+  margin-right: 8px;
   transform: scale(1.3);
+  cursor: pointer;
 }
 
 .disabled {
   pointer-events: none;
-  color: gray;
+  background-color: var(--mid-fill);
 }
 
 .results-area {
@@ -124,12 +138,14 @@ button:hover {
 
 .search-result {
   margin: 12px 0;
+  padding: 6px;
   border-radius: 16px;
   border: 2px solid var(--contrast);
+  background-color: var(--light-fill);
 }
 
 .text-output {
-  text-align: center;
+  margin-bottom: 100vh;
 }
 
 @media only screen and (max-width: 1000px) {

@@ -36,7 +36,7 @@ class App extends Component {
 
         {/* Webpage Header */}
         <p className='title'> Simple Search </p>
-        <p className='subtitle'> Subtitle Here </p>
+        <p className='subtitle'> A simple search Interface for academic literature </p>
         <hr></hr>
 
         {/* SearchArea component:
